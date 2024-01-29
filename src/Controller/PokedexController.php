@@ -1,0 +1,17 @@
+<?php
+
+namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+class PokedexController extends AbstractController
+{
+    #[Route('/', name: 'pokedex')]
+    public function index(): Response
+    {
+        return $this->render('pokedex/index.html.twig', [
+        ]);
+    }
+}

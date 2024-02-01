@@ -4,5 +4,15 @@
 {% block icon %}{{ asset('/assets/images/pokedex-icon.png') }}{% endblock %}
 
 {% block body %}
+    <div id="pokedex"></div>
+{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+
+    {{ encore_entry_script_tags('pokedex') }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('pokedex') }}
 {% endblock %}

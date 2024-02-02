@@ -1,8 +1,9 @@
 <template>
-  <h2>#{{ pokemonDetails.pokedexNumber }}</h2>
-  <h1>{{ pokemonDetails.pokemonName }}</h1>
-  <img :src="pokemonDetails.pokemonImage" data-adaptive-background="" class="pokemon-image" :alt="pokemonDetails.pokemonName">
+  <h2 v-if="pokemon.length >0">#{{ pokemon[index].pokedexNumber }}</h2>
+  <h1 v-if="pokemon.length >0">{{ pokemon[index].name }}</h1>
+  <img v-if="pokemon.length >0" :src="getPokemonImage"  data-adaptive-background="" class="pokemon-image">
   <div>
+    <button @click="previousPokemon()">Previous</button>
     <button @click="nextPokemon()">Next</button>
   </div>
 </template>
@@ -14,12 +15,12 @@ export default {
     return {
       pokemon: [],
       index: 0,
-      pokemonDetails: {
-        pokedexNumber: '001',
-        pokemonName: 'Bulbasaur',
-        pokemonImage: '/assets/images/pokemon/001Bulbasaur.png'
-      }
     };
+  },
+  computed: {
+    getPokemonImage() {
+      return '/assets/images/pokemon/'+this.pokemon[this.index].pokedexNumber+this.pokemon[this.index].name+'.png';
+    }
   },
   methods: {
     getPokemon: function() {
@@ -38,18 +39,15 @@ export default {
     },
     nextPokemon: function () {
       this.index++;
-      this.getPokemonDetails()
       this.getBackground()
     },
-    getPokemonDetails: function () {
-      this.pokemonDetails.pokemonName = this.pokemon[this.index].name;
-      this.pokemonDetails.pokedexNumber = this.pokemon[this.index].pokedexNumber;
-      this.pokemonDetails.pokemonImage = '/assets/images/pokemon/'+this.pokemonDetails.pokedexNumber+this.pokemonDetails.pokemonName+'.png';
-    }
+    previousPokemon: function () {
+      this.index--;
+      this.getBackground()
+    },
   },
   created() {
     this.getPokemon();
-    this.getBackground();
   }
 }
 </script>
@@ -59,6 +57,8 @@ export default {
 
 body {
   font-family: 'Russo One', sans-serif;
+  color: white;
+  text-shadow: 2px 2px 4px #000000;
 }
 
 #pokedex {

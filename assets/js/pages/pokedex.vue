@@ -3,8 +3,8 @@
   <h1 v-if="pokemon.length >0">{{ pokemon[index].name }}</h1>
   <img v-if="pokemon.length >0" :src="getPokemonImage"  data-adaptive-background="" class="pokemon-image">
   <div>
-    <button @click="previousPokemon()">Previous</button>
-    <button @click="nextPokemon()">Next</button>
+    <button @click="previousPokemon()" :disabled="isDisabled('previous')">Previous</button>
+    <button @click="nextPokemon()" :disabled="isDisabled('next')">Next</button>
   </div>
 </template>
 
@@ -20,7 +20,7 @@ export default {
   computed: {
     getPokemonImage() {
       return '/assets/images/pokemon/'+this.pokemon[this.index].pokedexNumber+this.pokemon[this.index].name+'.png';
-    }
+    },
   },
   methods: {
     getPokemon: function() {
@@ -37,14 +37,21 @@ export default {
         $.adaptiveBackground.run();
       });
     },
-    nextPokemon: function () {
-      this.index++;
-      this.getBackground()
+    previousPokemon() {
+      this.index = Math.max(0, this.index - 1);
+      this.getBackground();
     },
-    previousPokemon: function () {
-      this.index--;
-      this.getBackground()
+    nextPokemon() {
+      this.index = Math.min(this.pokemon.length - 1, this.index + 1);
+      this.getBackground();
     },
+    isDisabled(direction) {
+      if (direction === 'previous') {
+        return this.index === 0;
+      } else if (direction === 'next') {
+        return this.index === this.pokemon.length - 1;
+      }
+    }
   },
   created() {
     this.getPokemon();

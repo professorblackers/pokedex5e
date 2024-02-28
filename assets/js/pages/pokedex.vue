@@ -63,7 +63,7 @@ export default {
   },
   computed: {
     getPokemonImage() {
-      return '/assets/images/sprites/'+this.pokemon[this.index].pokedexNumber+'.png';
+      return '/assets/images/pokemon/'+this.pokemon[this.index].pokedexNumber+'.png';
     },
     getPrimaryType() {
       return '/assets/images/types/'+this.pokemon[this.index].primaryType+'.png';
